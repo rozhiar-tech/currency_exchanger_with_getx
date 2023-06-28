@@ -1,6 +1,6 @@
 # currency_exchanger_with_GetX
 
-This is an app to change curencies using live API s implement it with GetX statemanagement Framework
+This is an app to change currencies using live APIs s implement it with GetX state management Framework
 
 # Installation
 
@@ -9,3 +9,5 @@ This is an app to change curencies using live API s implement it with GetX state
 3- run `flutter run` to run the app
 
 # Screenshots
+
+![Screenshot_1687954596](https://github.com/rozhiar-tech/currency_exchanger_with_getx/assets/62569639/b3853c29-023f-4261-b4ea-e1a0c0d66f61)
