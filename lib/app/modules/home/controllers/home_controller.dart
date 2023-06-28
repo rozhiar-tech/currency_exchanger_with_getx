@@ -7,16 +7,23 @@ import 'package:currency_exchanger_with_getx/app/utilities/GlobalVariebles.dart'
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
+
+  // state variables for the home screen
   RxString title = 'Convert'.obs;
   RxString selectedCurrency = 'USD'.obs;
   RxString secondSelectedCurrency = 'USD'.obs;
   RxList currencyList = [].obs;
   RxString apiKey = GlobalVariebles.apiKey.obs;
+  RxString baseUrl = GlobalVariebles.baseUrl.obs;
+  RxString result = '0.00'.obs;
+
+  // controllers for the text fields
   TextEditingController amountController = TextEditingController();
+  TextEditingController toAmountController = TextEditingController();
 
   // function to get all the codes for the currencies
   Future<List<String>> getAvailableCurrencies() async {
-    final url = 'https://v6.exchangerate-api.com/v6/$apiKey/codes';
+    final url = '$baseUrl$apiKey/codes';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -29,6 +36,22 @@ class HomeController extends GetxController {
       return currencies;
     } else {
       throw Exception('Failed to fetch currencies');
+    }
+  }
+
+  // function to convert the currency
+  Future<double> convertCurrency(
+      String fromCurrency, String toCurrency, double amount) async {
+    final url = '$baseUrl$apiKey/pair/$fromCurrency/$toCurrency/$amount';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      double result = data['conversion_result'].roundToDouble();
+      toAmountController.text = result.toString();
+      return result;
+    } else {
+      throw Exception('Failed to convert currency');
     }
   }
 
